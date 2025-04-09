@@ -28,6 +28,92 @@ print("Welcome back to the UW Calculator")
 //: IMPORTANT: If any tests are commented out, you will be graded a zero (0)! You should never be in the habit of eliminating tests to make the code pass.
 //:
 class Calculator {
+    func add(lhs: Int, rhs: Int) -> Int {
+        return lhs + rhs
+    }
+    
+    func subtract(lhs: Int, rhs: Int) -> Int {
+        return lhs - rhs
+    }
+    
+    func multiply(lhs: Int, rhs: Int) -> Int {
+        return lhs * rhs
+    }
+    
+    func divide(lhs: Int, rhs: Int) -> Int {
+        return lhs / rhs
+    }
+    
+    func add (_ numbers: [Int]) -> Int {
+        var sum = 0
+        for i in 0 ... numbers.count - 1 {
+            sum += numbers[i]
+        }
+        return sum
+    }
+    
+    func multiply(_ numbers: [Int]) -> Int {
+        var product = 1
+        for i in 0 ... numbers.count - 1 {
+            product *= numbers[i]
+        }
+        return product
+    }
+    
+    func count (_ numbers: [Int]) -> Int {
+        return numbers.count
+    }
+    
+    func avg (_ numbers: [Int]) -> Int {
+        if numbers.count == 0 {
+            return 0
+        }
+        return add(numbers) / numbers.count
+    }
+    
+    func mathOp (lhs: Int, rhs: Int, op: (Int, Int) -> Int) -> Int {
+        return op(lhs, rhs)
+    }
+    
+    func mathOp (args: [Int], beg: Int, op: (Int, Int) -> Int) -> Int {
+        var result = args[beg]
+        for i in beg + 1 ... args.count - 1 {
+            result = op(result, args[i])
+        }
+        return result
+    }
+    
+    func add (lhs: (Int, Int), rhs: (Int, Int)) -> (Int, Int) {
+        return (lhs.0 + rhs.0, lhs.1 + rhs.1)
+    }
+    
+    func subtract (lhs: (Int, Int), rhs: (Int, Int)) -> (Int, Int) {
+        return (lhs.0 - rhs.0, lhs.1 - rhs.1)
+    }
+    
+    func add (lhs: [String:Int], rhs: [String:Int]) -> [String:Int] {
+    
+        var result: [String:Int] = [:]
+
+        for (key, leftVal) in lhs {
+            let rightVal = rhs[key] ?? 0
+            result[key] = leftVal + rightVal
+        }
+
+        return result
+    }
+    
+    func subtract (lhs: [String:Int], rhs: [String:Int]) -> [String:Int] {
+        var result: [String:Int] = [:]
+
+        for (key, leftVal) in lhs {
+            let rightVal = rhs[key] ?? 0
+            result[key] = leftVal - rightVal
+        }
+
+        return result
+    }
+    
 }
 
 //: Don't change the name of this object (`calc`); it's used in all the tests.
@@ -53,6 +139,7 @@ calc.multiply(lhs: 2, rhs: 2) == 4
 calc.divide(lhs: 2, rhs: 2) == 1
 
 calc.mathOp(lhs: 5, rhs: 5, op: { (lhs: Int, rhs: Int) -> Int in (lhs + rjs) + (lhs * rhs) }) == 35
+calc.mathOp(lhs: 5, rhs: 5, op: { (lhs: Int, rhs: Int) -> Int in (lhs + rhs) + (lhs * rhs) }) == 35
     // This style is one way of writing an anonymous function
 calc.mathOp(lhs: 10, rhs: -5, op: { ($0 + $1) + ($0 - $1) }) == 20
     // This is the second, more terse, style; either works
